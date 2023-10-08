@@ -66,14 +66,28 @@ export default {
 
   },
   methods: {
+    // findArquitecto: function (id) {
+    //   fetch(this.url + '/.netlify/functions/arquitectoFind/' + id,
+    //     { headers: { 'Accept': 'application/json' } })
+    //     .then((response) => response.json())
+    //     .then((items) => {
+    //       this.arquitecto = items[0];
+    //     })
+    // },
     findArquitecto: function (id) {
-      fetch(this.url + '/.netlify/functions/arquitectoFind/' + id,
-        { headers: { 'Accept': 'application/json' } })
-        .then((response) => response.json())
-        .then((items) => {
-          this.arquitecto = items[0];
-        })
-    },
+  console.log('Llamando a findArquitecto con ID:', id);
+  fetch(this.url + '/.netlify/functions/arquitectoFind/' + id, {
+    headers: { 'Accept': 'application/json' }
+  })
+  .then((response) => response.json())
+  .then((items) => {
+    console.log('Respuesta de arquitectoFind:', items);
+    this.arquitecto = items[0];
+  })
+  .catch(error => {
+    console.error('Error en la solicitud:', error);
+  });
+},
     updateArquitecto: function (id) {
       fetch(this.url + '/.netlify/functions/arquitectoUpdate/' + id,
         {

@@ -9,14 +9,14 @@ import AuthorDetails from "./components/AuthorDetails.vue";
 import PublisherIndex from "./components/PublisherIndex.vue";
 import PublisherDetails from "./components/PublisherDetails.vue";
 
-import BookIndex from "./components/CiudadIndex.vue";
-import BookDetails from "./components/CiudadDetails.vue";
+import CiudadIndex from "./components/CiudadIndex.vue";
+import CiudadDetails from "./components/CiudadDetails.vue";
 
-import AuthorIndex from "./components/ArquitectoIndex.vue";
-import AuthorDetails from "./components/ArquitectoDetails.vue";
+import ArquitectoIndex from "./components/ArquitectoIndex.vue";
+import ArquitectoDetails from "./components/ArquitectoDetails.vue";
 
-import PublisherIndex from "./components/EdificioIndex.vue";
-import PublisherDetails from "./components/EdificioDetails.vue";
+import EdificioIndex from "./components/EdificioIndex.vue";
+import EdificioDetails from "./components/EdificioDetails.vue";
 
 const routes = [
   { path: "/", component: Home },

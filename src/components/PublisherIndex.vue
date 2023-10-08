@@ -5,32 +5,32 @@
      <h2>{{title}}</h2>
      <table><thead>
        <tr>
-         <th>Title</th>
-        <th>Autor</th>
-        <th>Publisher</th>
-        <th>Edition</th>
+         <th>publisher</th>
+        <th>country</th>
+        <th>founded</th>
+        <th>genere</th>     
         <th class="text-center">Actions</th>
 	   </tr>
        </thead><tbody>
-       <tr v-for='book in books'>
-       <td>{{book.title}}</td>
-       <td>{{book.author}}</td>
-       <td>{{book.publisher}}</td>
-       <td>{{book.edition}}</td>
+       <tr v-for='publisher in publishers'>
+       <td>{{publisher.publisher}}</td>
+       <td>{{publisher.country}}</td>
+       <td>{{publisher.founded}}</td>
+       <td>{{publisher.genere}}</td>
        <td>
        <router-link class="button"
-         :to="'/book/show/'+book._id">Show</router-link>
+         :to="'/publisher/show/'+publisher._id">Show</router-link>
        &nbsp;
        <router-link class="button"
-         :to="'/book/edit/'+book._id">Edit</router-link>
+         :to="'/publisher/edit/'+publisher._id">Edit</router-link>
        &nbsp;
        <a class="button"
-         v-on:click="deleteBook(book._id)">Erase</a>
+         v-on:click="deletePublisher(publisher._id)">Erase</a>
        </td>
        </tr></tbody>
      </table>
      <router-link class="button button-primary" 
-       to="/book/create">New</router-link>
+       to="/publisher/create">New</router-link>
    </div>
   </div>
 </template>
@@ -38,31 +38,31 @@
 <script>
 	
 export default {
-  name: "Book Index",
+  name: "Publisher Index",
   data() {
     return {
-      title: 'Book List',
-      books: []
+      title: 'Publisher List',
+      publishers: []
     };
   },
   mounted() {
-    this.allBooks()
+    this.allPublishers()
   },
   methods: {
-    allBooks() {
-      fetch(this.url+'/.netlify/functions/bookFindAll',
+    allPublishers() {
+      fetch(this.url+'/.netlify/functions/publisherFindAll',
         { headers: {'Accept': 'application/json'}})
         .then((response) => response.json())
         .then((items) => {
-          this.books = items;
+          this.publishers = items;
         })
      },
-     deleteBook(id) {
-       fetch(this.url+'/.netlify/functions/bookDelete/'+id,
+     deletePublisher(id) {
+       fetch(this.url+'/.netlify/functions/publisherDelete/'+id,
          { headers: {'Content-Type': 'application/json'},
            method: 'DELETE'})
           .then((items) => {
-            this.allBooks();
+            this.allPublishers();
           }
         )
      }

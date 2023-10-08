@@ -1,4 +1,4 @@
-<!-- BookDetails.vue -->
+<!-- authorDetails.vue -->
 <template>
   <div class="row">
    <div class="eleven column" style="margin-top: 5%">
@@ -6,47 +6,37 @@
      <form>
      <div class="row">
       <div class="six columns">
-       <label for="titleInput">Title</label>
-       <input class="u-full-width" type="text"
-         v-model="book.title">
-      </div>
-      <div class="six columns">
        <label for="authorInput">Author</label>
        <input class="u-full-width" type="text"
-          v-model="book.author">
+          v-model="author.author">
       </div>
      </div>
      <div class="row">
       <div class="six columns">
-       <label for="publisherInput">Publisher</label>
+       <label for="nationalityInput">nationality</label>
        <input class="u-full-width" type="text"
-          v-model="book.publisher">
-      </div>
-      <div class="six columns">
-       <label for="editionInput">Edition</label>
-       <input class="u-full-width" type="text"
-         v-model="book.edition">
+          v-model="author.nationality">
       </div>
      </div>
      <div class="row">
       <div class="six columns">
-       <label for="copyrightInput">Copyright</label>
+       <label for="birth_yearInput">birth_year</label>
        <input class="u-full-width" type="number"
-          v-model="book.copyright">
+          v-model="author.birth_year">
       </div>
       <div class="six columns">
-       <label for="languageInput">Language</label>
+       <label for="fieldsInput">fields</label>
        <input class="u-full-width" type="text"
-         v-model="book.language">
+         v-model="author.fields">
       </div>
      </div>
      <div class="row">
       <router-link class="button button-primary" 
-        to="/book">Back</router-link>
+        to="/author">Back</router-link>
        <a v-if='edit' class="button button-primary" style="float: right"
-         v-on:click="updateBook(book._id)">Update</a>
+         v-on:click="updateAuthor(author._id)">Update</a>
        <a v-if='create' class="button button-primary" style="float: right"
-         v-on:click="createBook()">Create</a>
+         v-on:click="createAuthor()">Create</a>
      </div>
     </form>
   </div>
@@ -57,51 +47,50 @@
 import { useRoute } from 'vue-router'
 
 export default {
-  name: "Book Details",
+  name: "Author Details",
   props: ['create','edit','create'],
   data() {
     return {
-      title: "Book Data",
-      book: {}
+      title: "Author Data",
+      author: {}
     }
   },
   mounted() {
     const route = useRoute()
     if (route.params.id != null)
-      this.findBook(route.params.id);
+      this.findAuthor(route.params.id);
     else {
-      this.book = {
-        '_id': Math.floor(Math.random()*100000000),'title':'','edition':'',
-        'copyright':0,'language':'','pages':0,'author':'','author_id':0,
-        'publisher':'','publisher_id':0 };
+      this.author = {
+        '_id': Math.floor(Math.random()*100000000),'author':'','nationality':'',
+        'birth_year':'','fields':''};
     }
   },
   methods: {
-    findBook: function(id) {
-      fetch(this.url+'/.netlify/functions/bookFind/'+id,
+    findAuthor: function(id) {
+      fetch(this.url+'/.netlify/functions/authorFind/'+id,
       { headers: {'Accept': 'application/json'}})
       .then((response) => response.json())
       .then((items) => {
-       this.book = items[0];
+       this.author = items[0];
       })
     },
-    updateBook: function(id) {
-      fetch(this.url+'/.netlify/functions/bookUpdate/'+id,
+    updateAuthor: function(id) {
+      fetch(this.url+'/.netlify/functions/authorUpdate/'+id,
         { headers: {'Content-Type':'application/json'},
           method: 'PUT',
-          body: JSON.stringify(this.book)})
+          body: JSON.stringify(this.author)})
         .then((data) => {
-          this.$router.push('/book');
+          this.$router.push('/author');
         }
       )
     },
-    createBook: function() {
-      fetch(this.url+'/.netlify/functions/bookInsert',
+    createAuthor: function() {
+      fetch(this.url+'/.netlify/functions/authorInsert',
         { headers: {'Content-Type':'application/json'},
           method: 'POST',
-          body: JSON.stringify(this.book)})
+          body: JSON.stringify(this.author)})
         .then((data) => {
-           this.$router.push('/book');
+           this.$router.push('/author');
         }
       )
     }

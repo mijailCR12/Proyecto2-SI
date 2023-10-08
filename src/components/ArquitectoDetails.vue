@@ -49,8 +49,7 @@ export default {
     }
   },
   mounted() {
-    this.allPublishers()
-    this.allAuthors()
+    
     const route = useRoute()
     if (route.params.id != null)
       this.findArquitecto(route.params.id);
@@ -66,28 +65,14 @@ export default {
 
   },
   methods: {
-    // findArquitecto: function (id) {
-    //   fetch(this.url + '/.netlify/functions/arquitectoFind/' + id,
-    //     { headers: { 'Accept': 'application/json' } })
-    //     .then((response) => response.json())
-    //     .then((items) => {
-    //       this.arquitecto = items[0];
-    //     })
-    // },
     findArquitecto: function (id) {
-  console.log('Llamando a findArquitecto con ID:', id);
-  fetch(this.url + '/.netlify/functions/arquitectoFind/' + id, {
-    headers: { 'Accept': 'application/json' }
-  })
-  .then((response) => response.json())
-  .then((items) => {
-    console.log('Respuesta de arquitectoFind:', items);
-    this.arquitecto = items[0];
-  })
-  .catch(error => {
-    console.error('Error en la solicitud:', error);
-  });
-},
+      fetch(this.url + '/.netlify/functions/arquitectoFind/' + id,
+        { headers: { 'Accept': 'application/json' } })
+        .then((response) => response.json())
+        .then((items) => {
+          this.arquitecto = items[0];
+        })
+    },
     updateArquitecto: function (id) {
       fetch(this.url + '/.netlify/functions/arquitectoUpdate/' + id,
         {

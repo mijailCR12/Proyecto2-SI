@@ -1,4 +1,4 @@
-<!-- BookIndex.vue -->
+
 <template>
   <div class="row">
    <div style="margin-top: 5%">

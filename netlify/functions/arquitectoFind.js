@@ -13,10 +13,9 @@ exports.handler = async (event, context) => {
     const client = await clientPromise;
     const id = parseInt(event.path.split("/").reverse()[0]);
 
-    const authors = 
-	  await client.db("proyecto").collection("arquitectos").find({_id:id}).toArray();
+    const arquitectos = await client.db("proyecto").collection("arquitectos").find({_id:id}).toArray();
 
-    return { statusCode: 200, headers, body: JSON.stringify(authors)};
+    return { statusCode: 200, headers, body: JSON.stringify(arquitectos)};
   } catch (error) {
     console.log(error);
     return { statusCode: 400, headers, body: JSON.stringify(error) };

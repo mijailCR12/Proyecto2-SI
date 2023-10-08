@@ -5,32 +5,32 @@
      <h2>{{title}}</h2>
      <table><thead>
        <tr>
-         <th>Title</th>
-        <th>Autor</th>
-        <th>Publisher</th>
-        <th>Edition</th>
+         <th>Nombre</th>
+        <th>Fecha Nacimiento</th>
+        <th>Nacionalidad</th>
+        <th>Educacion</th>
         <th class="text-center">Actions</th>
 	   </tr>
        </thead><tbody>
-       <tr v-for='book in books'>
-       <td>{{book.title}}</td>
-       <td>{{book.author}}</td>
-       <td>{{book.publisher}}</td>
-       <td>{{book.edition}}</td>
+       <tr v-for='arquitecto in arquitectos'>
+       <td>{{arquitecto.nombre}}</td>
+       <td>{{arquitecto.fecha_nacimiento}}</td>
+       <td>{{arquitecto.nacionalidad}}</td>
+       <td>{{arquitecto.educacion}}</td>
        <td>
        <router-link class="button"
-         :to="'/book/show/'+book._id">Show</router-link>
+         :to="'/arquitecto/show/'+arquitecto._id">Show</router-link>
        &nbsp;
        <router-link class="button"
-         :to="'/book/edit/'+book._id">Edit</router-link>
+         :to="'/arquitecto/edit/'+arquitecto._id">Edit</router-link>
        &nbsp;
        <a class="button"
-         v-on:click="deleteBook(book._id)">Erase</a>
+         v-on:click="deleteArquitecto(arquitecto._id)">Erase</a>
        </td>
        </tr></tbody>
      </table>
      <router-link class="button button-primary" 
-       to="/book/create">New</router-link>
+       to="/arquitecto/create">New</router-link>
    </div>
   </div>
 </template>
@@ -38,31 +38,31 @@
 <script>
 	
 export default {
-  name: "Book Index",
+  name: "Arquitecto Index",
   data() {
     return {
-      title: 'Book List',
-      books: []
+      title: 'Arquitecto List',
+      arquitectos: []
     };
   },
   mounted() {
-    this.allBooks()
+    this.allArquitectos()
   },
   methods: {
-    allBooks() {
-      fetch(this.url+'/.netlify/functions/bookFindAll',
+    allArquitectos() {
+      fetch(this.url+'/.netlify/functions/arquitectoFindAll',
         { headers: {'Accept': 'application/json'}})
         .then((response) => response.json())
         .then((items) => {
-          this.books = items;
+          this.arquitectos = items;
         })
      },
-     deleteBook(id) {
-       fetch(this.url+'/.netlify/functions/bookDelete/'+id,
+     deleteArquitecto(id) {
+       fetch(this.url+'/.netlify/functions/arquitectoDelete/'+id,
          { headers: {'Content-Type': 'application/json'},
            method: 'DELETE'})
           .then((items) => {
-            this.allBooks();
+            this.allArquitectos();
           }
         )
      }

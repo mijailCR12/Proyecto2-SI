@@ -16,11 +16,11 @@ exports.handler = async (event, context) => {
 	console.log(event.body)
 
   // Realiza la actualización del libro en la base de datos
-  const result = await client.db("proyecto").collection("ciudades").updateOne(
+  const result = await client.db("proyecto").collection("edificios").updateOne(
     { _id: id },
     { $set: data } // Usamos los datos recibidos para actualizar el libro
   );  
-  return { statusCode: 200, headers, body: 'Libro actualizado correctamente' };
+  return { statusCode: 200, headers, body: 'edificio actualizado correctamente' };
   } catch (error) {
     console.log(error);
     return { statusCode: 422, headers, body: JSON.stringify(error) };

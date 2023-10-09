@@ -15,7 +15,7 @@ exports.handler = async (event, context) => {
 	data._id = parseInt(data._id)
     console.log(event.body)
 
-	await client.db("proyecto").collection("ciudades").insertOne(data);
+	await client.db("proyecto").collection("edificios").insertOne(data);
 
     return { statusCode: 200, headers, body: 'OK'};
   } catch (error) {

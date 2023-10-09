@@ -19,7 +19,7 @@ exports.handler = async (event, context) => {
     const id = parseInt(event.path.split("/").reverse()[0]);
 
     // Intenta eliminar el libro con el ID proporcionado
-    const result = await client.db("proyecto").collection("ciudades").findOneAndDelete({ _id: id });
+    const result = await client.db("proyecto").collection("edificios").findOneAndDelete({ _id: id });
 
     if (result.value) {
       console.log("Libro eliminado:", result.value);

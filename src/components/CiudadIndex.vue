@@ -1,36 +1,35 @@
-<!-- BookIndex.vue -->
 <template>
   <div class="row">
    <div style="margin-top: 5%">
      <h2>{{title}}</h2>
      <table><thead>
        <tr>
-         <th>Title</th>
-        <th>Autor</th>
-        <th>Publisher</th>
-        <th>Edition</th>
+         <th>Nombre</th>
+        <th>Pais</th>
+        <th>Poblacion</th>
+        <th>Superficie</th>
         <th class="text-center">Actions</th>
 	   </tr>
        </thead><tbody>
-       <tr v-for='book in books'>
-       <td>{{book.title}}</td>
-       <td>{{book.author}}</td>
-       <td>{{book.publisher}}</td>
-       <td>{{book.edition}}</td>
+       <tr v-for='ciudad in ciudades'>
+       <td>{{ciudad.nombre}}</td>
+       <td>{{ciudad.pais}}</td>
+       <td>{{ciudad.poblacion}}</td>
+       <td>{{ciudad.superficie}}</td>
        <td>
        <router-link class="button"
-         :to="'/book/show/'+book._id">Show</router-link>
+         :to="'/ciudad/show/'+ciudad._id">Show</router-link>
        &nbsp;
        <router-link class="button"
-         :to="'/book/edit/'+book._id">Edit</router-link>
+         :to="'/ciudad/edit/'+ciudad._id">Edit</router-link>
        &nbsp;
        <a class="button"
-         v-on:click="deleteBook(book._id)">Erase</a>
+         v-on:click="deleteCiudad(ciudad._id)">Erase</a>
        </td>
        </tr></tbody>
      </table>
      <router-link class="button button-primary" 
-       to="/book/create">New</router-link>
+       to="/ciudad/create">New</router-link>
    </div>
   </div>
 </template>
@@ -38,31 +37,31 @@
 <script>
 	
 export default {
-  name: "Book Index",
+  name: "Ciudad Index",
   data() {
     return {
-      title: 'Book List',
-      books: []
+      title: 'Ciudad List',
+      ciudades: []
     };
   },
   mounted() {
-    this.allBooks()
+    this.allCiudades()
   },
   methods: {
-    allBooks() {
-      fetch(this.url+'/.netlify/functions/bookFindAll',
+    allCiudades() {
+      fetch(this.url+'/.netlify/functions/ciudadFindAll',
         { headers: {'Accept': 'application/json'}})
         .then((response) => response.json())
         .then((items) => {
-          this.books = items;
+          this.ciudades = items;
         })
      },
-     deleteBook(id) {
-       fetch(this.url+'/.netlify/functions/bookDelete/'+id,
+     deleteCiudad(id) {
+       fetch(this.url+'/.netlify/functions/ciudadDelete/'+id,
          { headers: {'Content-Type': 'application/json'},
            method: 'DELETE'})
           .then((items) => {
-            this.allBooks();
+            this.allCiudades();
           }
         )
      }

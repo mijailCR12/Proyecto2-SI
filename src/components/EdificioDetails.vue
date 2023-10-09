@@ -1,4 +1,4 @@
-<!-- BookDetails.vue -->
+
 <template>
   <div class="row">
     <div class="eleven column" style="margin-top: 5%">
@@ -6,44 +6,50 @@
       <form>
         <div class="row">
           <div class="six columns">
-            <label for="titleInput">Title</label>
-            <input class="u-full-width" type="text" v-model="book.title">
+            <label for="nombreInput">Nombre</label>
+            <input class="u-full-width" type="text" v-model="edificio.nombre">
           </div>
           <div class="six columns">
-            <label for="authorSelect">Author</label>
-            <select class="u-full-width" v-model="book.author_id">
-              <option v-for="author in authors" :key="author._id" :value="author._id">{{ author.author }}</option>
+            <label for="ciudadSelect">Ciudad</label>
+            <select class="u-full-width" v-model="edificio.ciudad_id">
+              <option v-for="ciudad in ciudades" :key="ciudad._id" :value="ciudad._id">{{ ciudad.nombre }}</option>
             </select>
-            <input type="hidden" v-model="book.author">
+            <input type="hidden" v-model="edificio.ciudad">
           </div>
         </div>
         <div class="row">
           <div class="six columns">
-            <label for="publisherSelect">Publisher</label>
-            <select class="u-full-width" v-model="book.publisher_id">
-              <option v-for="publisher in publishers" :key="publisher._id" :value="publisher._id">{{ publisher.publisher}}</option>
+            <label for="arquitectoSelect">Arquitecto</label>
+            <select class="u-full-width" v-model="edificio.arquitecto_id">
+              <option v-for="arquitecto in arquitectos" :key="arquitecto._id" :value="arquitecto._id">{{ arquitecto.nombre}}</option>
             </select>
-            <input type="hidden" v-model="book.publisher">
+            <input type="hidden" v-model="edificio.arquitecto">
           </div>
           <div class="six columns">
-            <label for="editionInput">Edition</label>
-            <input class="u-full-width" type="text" v-model="book.edition">
+            <label for="pisosInput">Pisos</label>
+            <input class="u-full-width" type="number" v-model="edificio.pisos">
           </div>
         </div>
         <div class="row">
           <div class="six columns">
-            <label for="copyrightInput">Copyright</label>
-            <input class="u-full-width" type="number" v-model="book.copyright">
-          </div>
-          <div class="six columns">
-            <label for="languageInput">Language</label>
-            <input class="u-full-width" type="text" v-model="book.language">
+            <label for="alturaInput">Altura</label>
+            <input class="u-full-width" type="number" v-model="edificio.altura">
           </div>
         </div>
         <div class="row">
-          <router-link class="button button-primary" to="/book">Back</router-link>
-          <a v-if='edit' class="button button-primary" style="float: right" v-on:click="updateBook(book._id)">Update</a>
-          <a v-if='create' class="button button-primary" style="float: right" v-on:click="createBook()">Create</a>
+          <div class="six columns">
+            <label for="fecha_construccionInput">Fecha de Construccion</label>
+            <input class="u-full-width" type="text" v-model="edificio.fecha_construccion">
+          </div>
+          <div class="six columns">
+            <label for="costeInput">Coste</label>
+            <input class="u-full-width" type="text" v-model="edificio.coste">
+          </div>
+        </div>
+        <div class="row">
+          <router-link class="button button-primary" to="/edificio">Back</router-link>
+          <a v-if='edit' class="button button-primary" style="float: right" v-on:click="updateEdificio(edificio._id)">Update</a>
+          <a v-if='create' class="button button-primary" style="float: right" v-on:click="createEdificio()">Create</a>
         </div>
       </form>
     </div>
@@ -54,95 +60,101 @@
 import { useRoute } from 'vue-router'
 
 export default {
-  name: "Book Details",
+  name: "Edificio Details",
   props: ['create', 'edit', 'create'],
   data() {
     return {
-      title: "Book Data",
-      book: {},
-      publishers: [],
-      authors: []
+      title: "Edificio Data",
+      edificio: {},
+      arquitectos: [],
+      ciudades: []
     }
   },
   mounted() {
-    this.allPublishers()
-    this.allAuthors()
+    this.allArquitectoss()
+    this.allCiudades()
     const route = useRoute()
     if (route.params.id != null)
-      this.findBook(route.params.id);
+      this.findEdificio(route.params.id);
     else {
-      this.book = {
-        '_id': Math.floor(Math.random() * 100000000), 'title': '', 'edition': '',
-        'copyright': 0, 'language': '', 'pages': 0, 'author': '', 'author_id': 0,
-        'publisher': '', 'publisher_id': 0
+      this.edificio = {
+        '_id': Math.floor(Math.random() * 100000000), 
+        'nombre': '', 
+        'altura': 0,
+        'fecha_construccion': '',
+        'coste': '',
+        'pisos': 0, 
+        'ciudad': '', 'ciudad_id': 0,
+        'arquitecto': '', 'arquitecto_id': 0
       };
     }
 
   },
   methods: {
-    findBook: function (id) {
-      fetch(this.url + '/.netlify/functions/bookFind/' + id,
+    findEdificio: function (id) {
+      fetch(this.url + '/.netlify/functions/edificioFind/' + id,
         { headers: { 'Accept': 'application/json' } })
         .then((response) => response.json())
         .then((items) => {
-          this.book = items[0];
+          this.edificio = items[0];
         })
     },
-    allPublishers() {
-      fetch(this.url + '/.netlify/functions/publisherFindAll',
+    allArquitectoss() {
+      fetch(this.url + '/.netlify/functions/arquitectoFindAll',
         { headers: { 'Accept': 'application/json' } })
         .then((response) => response.json())
         .then((items) => {
-          this.publishers = items;
+          this.arquitectos = items;
         })
     },
-    allAuthors() {
-      fetch(this.url + '/.netlify/functions/authorFindAll',
+    allCiudades() {
+      fetch(this.url + '/.netlify/functions/ciudadFindAll',
         { headers: { 'Accept': 'application/json' } })
         .then((response) => response.json())
         .then((items) => {
-          this.authors = items;
+          this.ciudades = items;
         })
     },
-    updateBook: function (id) {
-      const selectedAuthor = this.authors.find(author => author._id === this.book.author_id);
-      if (selectedAuthor) {
-        this.book.author = selectedAuthor.author; // Agrega el nombre del autor al libro
+    updateEdificio: function (id) {
+      // Obtén el nombre del autor seleccionado
+      const selectedCiudad = this.ciudades.find(ciudad => ciudad._id === this.edificio.ciudad_id);
+      if (selectedCiudad) {
+        this.edificio.ciudad = selectedCiudad.nombre; 
       }
-      const selectedPublisher = this.publishers.find(publisher => publisher._id === this.book.publisher_id);
-      if (selectedPublisher) {
-        this.book.publisher = selectedPublisher.publisher;
+      const selectedArquitecto = this.arquitectos.find(arquitecto => arquitecto._id === this.edificio.arquitecto_id);
+      if (selectedArquitecto) {
+        this.edificio.arquitecto = selectedArquitecto.nombre;
       }
-      fetch(this.url + '/.netlify/functions/bookUpdate/' + id,
+      fetch(this.url + '/.netlify/functions/edificioUpdate/' + id,
         {
           headers: { 'Content-Type': 'application/json' },
           method: 'PUT',
-          body: JSON.stringify(this.book)
+          body: JSON.stringify(this.edificio)
         })
         .then((data) => {
-          this.$router.push('/book');
+          this.$router.push('/edificio');
         }
         )
     },
-    createBook: function () {
+    createEdificio: function () {
       // Obtén el nombre del autor seleccionado
-      const selectedAuthor = this.authors.find(author => author._id === this.book.author_id);
-      if (selectedAuthor) {
-        this.book.author = selectedAuthor.author; 
+      const selectedCiudad = this.ciudades.find(ciudad => ciudad._id === this.edificio.ciudad_id);
+      if (selectedCiudad) {
+        this.edificio.ciudad = selectedCiudad.nombre; 
       }
-      const selectedPublisher = this.publishers.find(publisher => publisher._id === this.book.publisher_id);
-      if (selectedPublisher) {
-        this.book.publisher = selectedPublisher.publisher;
+      const selectedArquitecto = this.arquitectos.find(arquitecto => arquitecto._id === this.edificio.arquitecto_id);
+      if (selectedArquitecto) {
+        this.edificio.arquitecto = selectedArquitecto.nombre;
       }
 
-      fetch(this.url + '/.netlify/functions/bookInsert',
+      fetch(this.url + '/.netlify/functions/edificioInsert',
         {
           headers: { 'Content-Type': 'application/json' },
           method: 'POST',
-          body: JSON.stringify(this.book)
+          body: JSON.stringify(this.edificio)
         })
         .then((data) => {
-          this.$router.push('/book');
+          this.$router.push('/edificio');
         }
         )
     }

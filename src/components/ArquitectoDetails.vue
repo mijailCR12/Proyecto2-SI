@@ -5,18 +5,6 @@
       <h2>{{ title }}</h2>
       <form>
         <div class="row">
-  <div class="six columns">
-    <label for="imagenInput">Imagen URL</label>
-    <input class="u-full-width" type="text" v-model="arquitecto.imagen">
-  </div>
-  <!-- Opción para subir archivos -->
-  <div class="six columns">
-    <label for="imagenFileInput">Subir Imagen</label>
-    <input class="u-full-width" type="file" v-on:change="handleFileUpload">
-  </div>
-</div>
-
-        <div class="row">
           <div class="six columns">
             <label for="nombreInput">Nombre</label>
             <input class="u-full-width" type="text" v-model="arquitecto.nombre">
@@ -110,23 +98,6 @@ export default {
         }
         )
     },
-    handleFileUpload(event) {
-    const file = event.target.files[0];
-    const formData = new FormData();
-    formData.append('imagen', file);
-
-    fetch(this.url + '/.netlify/functions/uploadImage', {
-      method: 'POST',
-      body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-      this.arquitecto.imagen = data.imageUrl; // Asigna la URL de la imagen al modelo de arquitecto
-    })
-    .catch(error => {
-      console.error('Error al subir la imagen:', error);
-    });
-  }
   }
 };
 </script>

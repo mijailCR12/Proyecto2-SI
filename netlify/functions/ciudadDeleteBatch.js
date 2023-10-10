@@ -18,18 +18,18 @@ exports.handler = async (event, context) => {
 
     const id = parseInt(event.path.split("/").reverse()[0]);
 
-    // Intenta eliminar el editor con el ID proporcionado
-    const result = await client.db("tarea").collection("publishers").findOneAndDelete({ _id:id});
+    // Intenta eliminar el libro con el ID proporcionado
+    const result = await client.db("proyecto").collection("ciudades").findOneAndDelete({ _id: id });
 
     if (result.value) {
-      console.log("Editor eliminado:", result.value);
+      console.log("Libro eliminado:", result.value);
       return { statusCode: 200, headers, body: JSON.stringify(result.value) };
     } else {
-      console.log("Editor no encontrado");
-      return { statusCode: 404, headers, body: "Editor no encontrado" };
+      console.log("Libro no encontrado");
+      return { statusCode: 404, headers, body: "Libro no encontrado" };
     }
   } catch (error) {
-    console.error("Error al eliminar el editor:", error);
+    console.error("Error al eliminar el libro:", error);
     return { statusCode: 500, headers, body: JSON.stringify(error) };
   } finally {
     // Cierra la conexión a MongoDB después de realizar la operación

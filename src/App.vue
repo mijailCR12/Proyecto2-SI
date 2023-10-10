@@ -4,16 +4,16 @@
     <router-link class="three columns button button-primary" 
       to="/">Home</router-link>
     <router-link class="three columns button button-primary" 
-      to="/book">Books</router-link>
+      to="/ciudad">Ciudades</router-link>
     <router-link class="three columns button button-primary" 
-      to="/author">Authors</router-link>
+      to="/edificio">Edificios</router-link>
     <router-link class="three columns button button-primary" 
-      to="/publisher">Publishers</router-link>
+      to="/arquitecto">Arquitectos</router-link>
   </div>
  <router-view />
   <div class="row">
     <button disabled="disabled" class="twelve columns button-primary">
-      Copyright (c) 2020 - Armando Arce-Orozco
+      Protecto 2 - Mijail Diaz Bengoa
     </button>
   </div>
 </div>

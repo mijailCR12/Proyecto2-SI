@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
     button.addEventListener('click', async function () {
         try {
             // Aquí puedes llamar a tu función de RabbitMQ
-            const response = await fetch('/.netlify/functions/AllTasks');
+            const response = await fetch('https://marvelous-queijadas-452369.netlify.app/.netlify/functions/AllTasks');
             
             if (response.ok) {
                 const result = await response.text();

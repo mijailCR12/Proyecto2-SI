@@ -4,7 +4,7 @@ const rabbitPromise = require('./rabbitMQ');
 
 const headers = require('./headersCORS');
 
-const url = 'https://bookstore-rabbitmq.netlify.app/.netlify/functions/'
+const url = 'https://marvelous-queijadas-452369.netlify.app/.netlify/functions/'
 
 exports.handler = async (event, context) => {
 
@@ -14,27 +14,27 @@ exports.handler = async (event, context) => {
 
   try {
     const channel = await rabbitPromise();
-    let message = await channel.get("bookstore",{'noAck':true});
+    let message = await channel.get("edificios",{'noAck':true});
     while (message) {
       const request = JSON.parse(message.content.toString());
       switch (request.method) {
         case "DELETE":
-          await fetch(url+'bookDeleteBatch/'+request.id, {
+          await fetch(url+'ciudadDeleteBatch/'+request.id, {
             method: "DELETE",
             headers: {"Content-type": "application/json"}});
           break;
         case "UPDATE":
-          await fetch(url+'bookUpdateBatch/'+request.id, {
+          await fetch(url+'ciudadUpdateBatch/'+request.id, {
             headers: {"Content-type": "application/json"},
             method: "PUT", body: JSON.stringify(request.body)});
           break;
         case "INSERT":
-          await fetch(url+'bookInsertBatch', {
+          await fetch(url+'ciudadInsertBatch', {
             headers: {"Content-type": "application/json"},
             method: "POST",body: JSON.stringify(request.body)});
           break;
       }
-      message = await channel.get("bookstore",{'noAck':true});
+      message = await channel.get("edificios",{'noAck':true});
     }
     return { statusCode: 200, headers, body: 'OK'};
   } catch (error) {

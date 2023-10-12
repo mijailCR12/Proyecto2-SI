@@ -8,9 +8,6 @@
             <label for="nombreInput">Nombre</label>
             <input class="u-full-width" type="text" v-model="ciudad.nombre">
           </div>
-        
-        </div>
-        <div class="row">
           <div class="six columns">
             <label for="paisInput">Pais</label>
             <input class="u-full-width" type="text" v-model="ciudad.pais">
@@ -33,10 +30,11 @@
         </div>
       </form>
     </div>
-    <div>
-    <ul v-if='show'>
-      <li v-for="edificio in edificios" :key="producto.id">
-        {{ edificio.nombre }}
+    <div v-if='show'>
+      <h2>Lista de edificios en esta ciudad</h2>
+    <ul>
+      <li v-for="edificio in edificios" :key="edificio._id">
+        <router-link  :to="'/edificio/show/'+edificio._id">{{ edificio.nombre }}</router-link>
       </li>
     </ul>
   </div>
@@ -60,7 +58,7 @@ export default {
     const route = useRoute()
     if (route.params.id != null)
       this.findCiudad(route.params.id),
-      this.allEdificios(ciudad.ciudad_id);
+      this.allEdificios(route.params.id);
     else {
       this.ciudad = {
         '_id': Math.floor(Math.random() * 100000000), 
@@ -81,7 +79,7 @@ export default {
           this.ciudad = items[0];
         })
     },
-    allEdificios: function( id) {
+    allEdificios: function(id) {
       fetch(this.url + '/.netlify/functions/FindAllCiudadEdificio/'+ id,
         { headers: { 'Accept': 'application/json' } })
         .then((response) => response.json())

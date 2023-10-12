@@ -8,7 +8,7 @@
       <li><router-link to='/edificio'>Edificios information</router-link></li>
       <li><router-link to='/arquitecto'>Arquitectos information</router-link></li>
     </ul>
-    <h1>Ejecutar Funciónes almacenadas en RabbitMQ</h1>
+    <h5>Ejecutar Funciónes almacenadas en RabbitMQ</h5>
     <button id="ejecutarFuncion">Ejecutar Función</button>
   </div>
 </template>

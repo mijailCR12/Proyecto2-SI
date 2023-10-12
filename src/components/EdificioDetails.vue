@@ -35,12 +35,12 @@
             <label for="alturaInput">Altura</label>
             <input class="u-full-width" type="number" v-model="edificio.altura">
           </div>
-        </div>
-        <div class="row">
           <div class="six columns">
             <label for="fecha_construccionInput">Fecha de Construccion</label>
             <input class="u-full-width" type="text" v-model="edificio.fecha_construccion">
           </div>
+        </div>
+        <div class="row">
           <div class="six columns">
             <label for="costeInput">Coste</label>
             <input class="u-full-width" type="text" v-model="edificio.coste">

@@ -53,6 +53,17 @@
         </div>
       </form>
     </div>
+    <div v-if='show' class="row">
+          <div class="six columns">
+            <h5>Ver arquitecto</h5>
+        <router-link  :to="'/arquitecto/show/'+edificio.arquitecto_id">{{ edificio.arquitecto }}</router-link> 
+          </div>
+          <div class="six columns">
+             <h5>Ver ciudad</h5>
+        <router-link  :to="'/ciudad/show/'+edificio.ciudad_id">{{ edificio.ciudad }}</router-link>
+          </div>
+          
+  </div><hr>
   </div>
 </template>
 
@@ -61,7 +72,7 @@ import { useRoute } from 'vue-router'
 
 export default {
   name: "Edificio Details",
-  props: ['create', 'edit', 'create'],
+  props: ['create', 'edit', 'show'],
   data() {
     return {
       title: "Edificio Data",

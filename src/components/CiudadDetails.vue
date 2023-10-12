@@ -33,6 +33,13 @@
         </div>
       </form>
     </div>
+    <div>
+    <ul v-if='show'>
+      <li v-for="edificio in edificios" :key="producto.id">
+        {{ edificio.nombre }}
+      </li>
+    </ul>
+  </div>
   </div>
 </template>
 
@@ -41,19 +48,19 @@ import { useRoute } from 'vue-router'
 
 export default {
   name: "Ciudad Details",
-  props: ['create', 'edit', 'create'],
+  props: ['create', 'edit', 'show'],
   data() {
     return {
       title: "Ciudad Data",
       ciudad: {},
-      publishers: [],
-      authors: []
+      edificios: []
     }
   },
   mounted() {
     const route = useRoute()
     if (route.params.id != null)
-      this.findCiudad(route.params.id);
+      this.findCiudad(route.params.id),
+      this.allEdificios(ciudad.ciudad_id);
     else {
       this.ciudad = {
         '_id': Math.floor(Math.random() * 100000000), 
@@ -74,6 +81,15 @@ export default {
           this.ciudad = items[0];
         })
     },
+    allEdificios: function( id) {
+      fetch(this.url + '/.netlify/functions/FindAllCiudadEdificio/'+ id,
+        { headers: { 'Accept': 'application/json' } })
+        .then((response) => response.json())
+        .then((items) => {
+          this.edificios = items;
+        })
+    },
+    
     updateCiudad: function (id) {
       
       fetch(this.url + '/.netlify/functions/ciudadUpdate/' + id,

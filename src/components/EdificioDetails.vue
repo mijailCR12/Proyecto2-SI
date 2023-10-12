@@ -71,7 +71,7 @@ export default {
     }
   },
   mounted() {
-    this.allArquitectoss()
+    this.allArquitectos()
     this.allCiudades()
     const route = useRoute()
     if (route.params.id != null)
@@ -99,7 +99,7 @@ export default {
           this.edificio = items[0];
         })
     },
-    allArquitectoss() {
+    allArquitectos() {
       fetch(this.url + '/.netlify/functions/arquitectoFindAll',
         { headers: { 'Accept': 'application/json' } })
         .then((response) => response.json())

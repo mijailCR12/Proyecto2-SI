@@ -25,7 +25,7 @@ exports.handler = async (event, context) => {
   //   return { statusCode: 422, headers, body: JSON.stringify(error) };
   // }
     const channel = await rabbitPromise();
-    const request = `{'method':'UPDATE','id':${id},'body':${event.body}}`;
+    const request = `{"method":"UPDATE","id":${id},"body":${event.body}}`;
     await channel.sendToQueue("ciudades", Buffer.from(request));
 
     return { statusCode: 200, headers, body: 'OK'};

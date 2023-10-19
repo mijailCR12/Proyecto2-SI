@@ -55,7 +55,7 @@ exports.handler = async (event, context) => {
     const id = parseInt(event.path.split("/").reverse()[0]);
 
     const channel = await rabbitPromise();
-    const request = `{'method':'DELETE','id': ${id} }`;
+    const request = `{"method":"DELETE","id": ${id} }`;
     await channel.sendToQueue("ciudades", Buffer.from(request));
 
     return {statusCode: 200,headers,body: status};

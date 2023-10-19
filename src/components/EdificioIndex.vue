@@ -2,7 +2,18 @@
 <template>
   <div class="row">
    <div style="margin-top: 5%">
-     <h2>{{title}}</h2>
+    <div class="row">
+          <div class="six columns">
+            <h2>{{title}}</h2>
+          </div>
+          <div class="six columns">
+            <a class="button"
+         v-on:click="ejecutarTasks()">Actualizar tabla</a>
+         &nbsp;
+         <router-link class="button button-primary" 
+       to="/edificio/create">New</router-link>
+          </div>
+        </div>
      <table><thead>
        <tr>
          <th>Nombre</th>
@@ -35,8 +46,7 @@
        </td>
        </tr></tbody>
      </table>
-     <router-link class="button button-primary" 
-       to="/edificio/create">New</router-link>
+     
    </div>
   </div>
 </template>
@@ -48,7 +58,8 @@ export default {
   data() {
     return {
       title: 'Edificio List',
-      edificios: []
+      edificios: [],
+      recargado: false,
     };
   },
   mounted() {
@@ -62,6 +73,17 @@ export default {
         .then((items) => {
           this.edificios = items;
         })
+     },
+     ejecutarTasks() {
+      if (!this.recargado) { // Verificar si no se ha recargado aún
+        fetch(this.url + '/.netlify/functions/edificiosTasks', {
+          headers: { 'Accept': 'application/json' },
+          method: 'GET',
+        }).then(() => {
+          this.recargado = true; // Marcar como recargado
+          location.reload(); // Recargar la página
+        });
+      }
      },
      deleteEdificio(id) {
        fetch(this.url+'/.netlify/functions/edificioDelete/'+id,

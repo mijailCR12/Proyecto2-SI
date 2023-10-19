@@ -2,9 +2,19 @@
 <template>
   <div class="row">
    <div style="margin-top: 5%">
-     <h2>{{title}}</h2>
-     <a class="button"
-         v-on:click="ejecutarTasks()">Erase</a>
+    <div class="row">
+          <div class="six columns">
+            <h2>{{title}}</h2>
+          </div>
+          <div class="six columns">
+            <a class="button"
+         v-on:click="ejecutarTasks()">Actualizar tabla</a>
+         &nbsp;
+         <router-link class="button button-primary" 
+       to="/arquitecto/create">New</router-link>
+          </div>
+        </div>
+     
      <table><thead>
        <tr>
          <th>Nombre</th>
@@ -31,8 +41,7 @@
        </td>
        </tr></tbody>
      </table>
-     <router-link class="button button-primary" 
-       to="/arquitecto/create">New</router-link>
+
    </div>
   </div>
 </template>
@@ -44,7 +53,8 @@ export default {
   data() {
     return {
       title: 'Arquitecto List',
-      arquitectos: []
+      arquitectos: [],
+      recargado: false,
     };
   },
   mounted() {
@@ -60,9 +70,15 @@ export default {
         })
      },
      ejecutarTasks() {
-      fetch(this.url+'/.netlify/functions/arquitectosTasks',
-        { headers: {'Accept': 'application/json'},
-        method: 'GET'})
+      if (!this.recargado) { // Verificar si no se ha recargado aún
+        fetch(this.url + '/.netlify/functions/arquitectosTasks', {
+          headers: { 'Accept': 'application/json' },
+          method: 'GET',
+        }).then(() => {
+          this.recargado = true; // Marcar como recargado
+          location.reload(); // Recargar la página
+        });
+      }
      },
      deleteArquitecto(id) {
        fetch(this.url+'/.netlify/functions/arquitectoDelete/'+id,

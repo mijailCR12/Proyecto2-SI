@@ -3,6 +3,8 @@
   <div class="row">
    <div style="margin-top: 5%">
      <h2>{{title}}</h2>
+     <a class="button"
+         v-on:click="ejecutarTasks()">Erase</a>
      <table><thead>
        <tr>
          <th>Nombre</th>
@@ -56,6 +58,11 @@ export default {
         .then((items) => {
           this.arquitectos = items;
         })
+     },
+     ejecutarTasks() {
+      fetch(this.url+'/.netlify/functions/arquitectosTasks',
+        { headers: {'Accept': 'application/json'},
+        method: 'GET'})
      },
      deleteArquitecto(id) {
        fetch(this.url+'/.netlify/functions/arquitectoDelete/'+id,

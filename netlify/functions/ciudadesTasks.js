@@ -12,19 +12,15 @@ exports.handler = async (event, context) => {
     return { statusCode: 200, headers, body: "OK" };
   }
 
-  // const conn = await amqp.connect(process.env.CLOUDAMQP_URL);
-  // console.log('RabbitMQ connection established'); // Agrega esto para la depuraciónconst channel = await conn.createChannel();
 
-  // console.log('Received message:', message.content.toString()); // Agrega esto para la depuración
 
   try {
     const channel = await rabbitPromise();
     
-    let message = await channel.get("edificios",{'noAck':true});
+    let message = await channel.get("ciudades",{'noAck':true});
     
     while (message) {
       const request = JSON.parse(message.content.toString());
-      console.log('Received request:', request);
       switch (request.method) {
         case "DELETE":
           await fetch(url+'ciudadDeleteBatch/'+request.id, {
@@ -42,7 +38,7 @@ exports.handler = async (event, context) => {
             method: "POST",body: JSON.stringify(request.body)});
           break;
       }
-      message = await channel.get("edificios",{'noAck':true});
+      message = await channel.get("ciudades",{'noAck':true});
     }
     return { statusCode: 200, headers, body: 'OK'};
   } catch (error) {

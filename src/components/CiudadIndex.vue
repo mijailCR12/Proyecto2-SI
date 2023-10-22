@@ -74,7 +74,7 @@ export default {
           method: 'GET',
         }).then(() => {
           this.recargado = true; // Marcar como recargado
-          location.reload(); // Recargar la página
+          window.location.href = '/'
         });
       }
      },

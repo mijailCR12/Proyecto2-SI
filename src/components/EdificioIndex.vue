@@ -63,6 +63,17 @@ export default {
           this.edificios = items;
         })
      },
+     ejecutarTasks() {
+      if (!this.recargado) { // Verificar si no se ha recargado aún
+        fetch(this.url + '/.netlify/functions/edificiosTasks', {
+          headers: { 'Accept': 'application/json' },
+          method: 'GET',
+        }).then(() => {
+          this.recargado = true; // Marcar como recargado
+          window.location.href = '/'
+        });
+      }
+     },
      deleteEdificio(id) {
        fetch(this.url+'/.netlify/functions/edificioDelete/'+id,
          { headers: {'Content-Type': 'application/json'},

@@ -56,6 +56,17 @@ export default {
           this.ciudades = items;
         })
      },
+     ejecutarTasks() {
+      if (!this.recargado) { // Verificar si no se ha recargado aún
+        fetch(this.url + '/.netlify/functions/ciudadesTasks', {
+          headers: { 'Accept': 'application/json' },
+          method: 'GET',
+        }).then(() => {
+          this.recargado = true; // Marcar como recargado
+          window.location.href = '/'
+        });
+      }
+     },
      deleteCiudad(id) {
        fetch(this.url+'/.netlify/functions/ciudadDelete/'+id,
          { headers: {'Content-Type': 'application/json'},
